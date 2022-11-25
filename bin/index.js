@@ -10,7 +10,7 @@ getEpisodes();
 
 console.log( "\n\ngetEpisodes() episodesJSON = " +episodesJSON );
 
-const PORT = 8080;
+const PORT = 5173;
 
 var express = require('express');
 const { url } = require('inspector');
