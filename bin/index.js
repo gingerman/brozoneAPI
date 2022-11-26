@@ -67,9 +67,11 @@ function parserXMLtoJSON(xml_data){
 
         if(error === null) {
             const obj = JSON.parse( JSON.stringify(result) );	
-            var episode = {};
+            var episode = [];
             var key = "Brozones";
-            episode[key] = [];
+            // episode[key] = [];
+            // episode = [];
+
             for ( item in obj.rss.channel[0].item ){
                 var itunesTitle = String( obj.rss.channel[0].item[item]["itunes:title"] );
                 var itunesEpisodeNumber = String( obj.rss.channel[0].item[item]["itunes:episode"] );
@@ -79,14 +81,21 @@ function parserXMLtoJSON(xml_data){
                 var itunesImage = String( obj.rss.channel[0].item[item]["itunes:image"][0].href );
                 var publishedDate = String( obj.rss.channel[0].item[item]["pubDate"] );
                 let myObj = {};
-                myObj =  { show: [ {episodeNumber:itunesEpisodeNumber,
+                // myObj =  { show: [ {episodeNumber:itunesEpisodeNumber,
+                //                     episodeName:itunesTitle,
+                //                     description: description,
+                //                     image:itunesImage,
+                //                     streamURL:streamURL,
+                //                     streamDuration:streamDuration,
+                //                     publishedDate:publishedDate } ] } ;
+                myObj =  {episodeNumber:itunesEpisodeNumber,
                                     episodeName:itunesTitle,
                                     description: description,
                                     image:itunesImage,
                                     streamURL:streamURL,
                                     streamDuration:streamDuration,
-                                    publishedDate:publishedDate } ] } ;
-                episode[key].push(myObj); 
+                                    publishedDate:publishedDate };
+                episode.push(myObj); 
             }
                             
             var j = JSON.stringify(episode);
