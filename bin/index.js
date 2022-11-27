@@ -1,38 +1,36 @@
 const https = require('https');
 const xml2js = require('xml2js');
-// const xpath = require("xml2js-xpath");
-const parser = new xml2js.Parser({ attrkey: "ATTR", ignoreAttrs: false, mergeAttrs: true });
-const rssFeedURL = "https://rss.podomatic.net/rss/thebrozone.podomatic.com/rss2.xml"; 
-
-
-var episodesJSON;
-getEpisodes();
-
-console.log( "\n\ngetEpisodes() episodesJSON = " +episodesJSON );
-
-const PORT = 5173;
-
 var express = require('express');
 const { url } = require('inspector');
+
+const parser = new xml2js.Parser({ attrkey: "ATTR", ignoreAttrs: false, mergeAttrs: true });
+const rssFeedURL = "https://rss.podomatic.net/rss/thebrozone.podomatic.com/rss2.xml";
+const cors = require('cors');
+const fs = require('fs');
+const PORT = 5173;
+var episodesJSON;
+
+getEpisodes();
+
 var app = express()
 app.locals.episodesJSON = episodesJSON;
 
 app.listen( 
     PORT,
-    () => console.log("it's alive on PORT : "+PORT)
+    () => console.log("nodejs serverserving now on PORT : "+PORT)
 )
-
-
-
-app.get("/brozone",  function (req, res){
-
+app.use(cors({
+    origin: ['http://localhost:5173']
+}));
+// app.use(cors({
+//     origin: 'http://localhost:5173/' 
+// }));
+app.get('/api/brozone',  function (req, res){
     //let episodesJSON = JSON.parse( episodes );
     console.log( "\n/brozone called");    
-    res.send(  JSON.parse(episodesJSON) );    
+    res.send(  JSON.parse(episodesJSON) );  
+    fs.writeFileSync('./properJSON.json', episodesJSON);
 });
-
-
-
 
 function getEpisodes(){
 
