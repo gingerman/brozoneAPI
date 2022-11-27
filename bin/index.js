@@ -7,7 +7,7 @@ const parser = new xml2js.Parser({ attrkey: "ATTR", ignoreAttrs: false, mergeAtt
 const rssFeedURL = "https://rss.podomatic.net/rss/thebrozone.podomatic.com/rss2.xml";
 const cors = require('cors');
 const fs = require('fs');
-const PORT = 5173;
+const PORT = 5000;
 var episodesJSON;
 
 getEpisodes();
@@ -19,12 +19,7 @@ app.listen(
     PORT,
     () => console.log("nodejs serverserving now on PORT : "+PORT)
 )
-app.use(cors({
-    origin: ['http://localhost:5173']
-}));
-// app.use(cors({
-//     origin: 'http://localhost:5173/' 
-// }));
+
 app.get('/api/brozone',  function (req, res){
     //let episodesJSON = JSON.parse( episodes );
     console.log( "\n/brozone called");    
